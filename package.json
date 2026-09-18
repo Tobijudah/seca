@@ -8,7 +8,8 @@
     "build": "next build",
     "start": "next start",
     "typecheck": "tsc --noEmit",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "a11y": "node scripts/a11y.mjs"
   },
   "dependencies": {
     "@base-ui/react": "1.8.0",
@@ -23,6 +24,7 @@
     "@types/node": "22.20.3",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
+    "axe-core": "4.13.0",
     "eslint": "9.39.5",
     "eslint-config-next": "16.3.5",
     "postcss": "8.5.28",
