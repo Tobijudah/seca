@@ -15,6 +15,8 @@ export const ease = {
   wipe: "power1.inOut",
   /** Lines drawing in at constant speed, so they track the staggered years beside them. */
   draw: "none",
+  /** An element already on screen moving between two fixed positions. */
+  move: "power3.inOut",
   /** Period colour sweeps. */
   sweep: "sine.inOut",
 } as const;
