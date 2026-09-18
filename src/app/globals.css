@@ -1,0 +1,64 @@
+@import "tailwindcss";
+
+/* No phone frame was supplied, so the stacked layout starts where the 1440px desktop
+   composition stops fitting: phones, and tablets held upright. `short-phone` tightens type on landscape-ish phones. */
+@custom-variant phone (@media (max-width: 1024px) and ((max-width: 760px) or (orientation: portrait)));
+@custom-variant short-phone (@media (max-width: 760px) and (max-height: 600px));
+
+/* Colours. `commerce-*` names are the Figma file's own colour variables; the rest have
+   no Figma variable and are named for their role here. `static` emits every token even
+   when no class uses it, because canvas and GSAP code reads them at runtime. */
+@theme static {
+  --color-commerce-yellow: #ffad00;
+  --color-commerce-orange: #e9623b;
+  --color-commerce-dark-green: #285056;
+  --color-commerce-purple: #786b9c;
+  --color-commerce-cream: #f9f7f1;
+  --color-commerce-pink: #e35b67;
+
+  --color-wine: #6b2e4b;
+  /* Deviation from Figma for contrast: the closest pink to commerce-pink that carries a
+     white label at WCAG AA (4.56:1; Figma's pink is 3.52:1). The hover goes darker. */
+  --color-pink-deep: #d04353;
+  --color-pink-deep-hover: #c6394b;
+  /* Silhouette fills, one shade off the period colour they sit on. */
+  --color-motif-yellow: #f7931e;
+  --color-motif-orange: #da512a;
+  --color-motif-dark-green: #3a6a72;
+  /* Sources panel. */
+  --color-paper: #f8f1eb;
+  --color-ink: #352d2a;
+  --color-ink-muted: #685c57;
+  --color-line: #d8c9c1;
+  --color-line-soft: #ded3cd;
+  --color-line-strong: #b3a29b;
+  --color-handle: #c5b8b1;
+
+}
+
+/* `inline` so the variable next/font sets on <html> is resolved where it is used. */
+@theme inline {
+  --font-sans: var(--font-dm-sans), Arial, sans-serif;
+}
+
+/* Elements that JavaScript animates in start hidden when scripts can run, so the
+   finished page never paints, vanishes, and then replays its entrance. Each script
+   reveals its own elements once they are parked behind their masks. If a script never
+   runs, the fallback shows them after 3s; without scripting nothing is hidden. */
+@media (scripting: enabled) {
+  [data-reveal] { visibility: hidden; animation: reveal-fallback 0s 3s forwards; }
+}
+@keyframes reveal-fallback {
+  to { visibility: visible; }
+}
+
+@layer base {
+  html { scroll-behavior: smooth; overflow-x: clip; }
+  body { overflow-x: clip; background: var(--color-wine); }
+  button, a { -webkit-tap-highlight-color: transparent; }
+  :focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+  }
+}
